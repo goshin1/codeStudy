@@ -10,3 +10,4 @@ for i in range(int(input())):
         print(2)
     else: # 교점이 없을 경우
         print(0)
+ 
