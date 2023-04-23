@@ -1,0 +1,10 @@
+months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31] # 월별 일 수
+week = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'] # 출력 값
+start = 1 # 시작 요일
+x, y = map(int, input().split()) # 월, 일 입력
+for i in range(x - 1): # 해당 월 전까지 요일을 계산
+  start += months[i] 
+  start %= 7
+start += (y - 1) # 해당 월이 되면 입력한 일 수를 더한다. 여기서 -1을 하는 것은 시작이 이미 1로 되어있기 때문이다.
+start %= 7 
+print(week[start])
