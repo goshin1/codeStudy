@@ -1,0 +1,19 @@
+nums = [*map(int, input())]
+temp = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+res = 1
+for i in range(len(nums)): # 입력받은 숫자를 하나씩 읽어 들인다.
+    if nums[i] in temp: # 세트에 있을 경우 꺼낸다.
+        temp.pop(temp.index(nums[i]))
+    else: # 없을 경우
+        # 만일 꺼내려는 숫자가 6이나 9일 경우 6이나 9를 뒤접어서 꺼낼 수 있다.
+        if (nums[i] == 9 and 6 in temp) or (nums[i] == 6 and 9 in temp): # 뒤집어서 꺼낼 수 있을 경우
+            if nums[i] == 9: # 9일 경우 6을 꺼낸다.
+                temp.pop(temp.index(6))
+            elif nums[i] == 6: # 6일 경우 9를 꺼낸다.
+                temp.pop(temp.index(9))
+        else: # 만일 아예 없을 경우 한 세트를 추가하고 해당 숫자를 꺼낸 후 세트의 갯수를 1개 증가
+            temp = temp + [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+            res += 1
+            temp.pop(temp.index(nums[i]))
+
+print(res)
