@@ -1,0 +1,6 @@
+for _ in range(int(input())):
+    a, b = map(int, input().split())
+    temp = [0, 0, 0, 0]
+    for i in range(1, 5):
+        temp[i - 1] = (a**i) % 10
+    print(temp[b % 4 - 1])
