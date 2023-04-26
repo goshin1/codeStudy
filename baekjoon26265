@@ -1,0 +1,16 @@
+import sys
+
+temp = {}
+for _ in range(int(sys.stdin.readline())):
+    mento, menti = sys.stdin.readline().strip().split()
+    if mento in temp.keys():
+        temp[mento].append(menti)
+    else:
+        temp[mento] = [menti]
+keys = list(temp.keys())
+keys.sort()
+for k in keys:
+    values = temp[k]
+    values.sort(reverse=True)
+    for v in values:
+        print(k, v)
