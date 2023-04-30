@@ -1,0 +1,32 @@
+def dfs(x, y): # 흰지렁이 이동
+    stack = [(x, y)]
+    while stack:
+        x, y = stack.pop()
+        array[x][y] = 2
+        mx = x - 1 if x - 1 > 0 else 0
+        px = x + 1 if x + 1 < n else n - 1
+        my = y - 1 if y - 1 > 0 else 0
+        py = y + 1 if y + 1 < m else m - 1
+        if array[mx][y] == 1:
+            stack.append([mx, y])
+        if array[x][py] == 1:
+            stack.append([x, py])
+        if array[px][y] == 1:
+            stack.append([px, y])
+        if array[x][my] == 1:
+            stack.append([x, my])
+
+
+for _ in range(int(input())): # 테스트 횟수
+    m, n, k = map(int, input().split()) # 배추의 가로, 세로, 배추 개수
+    array = [[0] * m for i in range(n)]
+    count = 0
+    for i in range(k): # 배추 위치 입력
+        x, y = map(int, input().split())
+        array[y][x] = 1
+    for i in range(n):
+        for j in range(m):
+            if array[i][j] == 1: # 배추위치
+                dfs(i, j)
+                count += 1
+    print(count)
