@@ -1,0 +1,14 @@
+n = int(input())
+b = [0] * n
+a = [*map(int, input().split())]
+asort = a[:]
+asort.sort()
+res = []
+for i in range(n):
+    r = asort.index(a[i])
+    if r not in res:
+        res.append(r)
+    else:
+        b[r] += 1
+        res.append(r + b[r])
+print(*res, sep=' ')
