@@ -1,0 +1,22 @@
+n, m = map(int, input().split())
+board = [[*map(str, input())] for _ in range(n)]
+res = []
+
+for i in range(n - 7):
+    for j in range(m - 7):
+        cnt1 = 0  # 처음이 흰
+        cnt2 = 0  # 처음이 흑
+        for a in range(i, i + 8):
+            for b in range(j, j + 8):
+                if (a + b) % 2 == 0: # 번호가 짝수 일 때 예를 들어 1,1칸이라던가 1,3칸이라던가
+                    if board[a][b] != 'W':
+                        cnt1 += 1
+                    else:
+                        cnt2 += 1
+                else:
+                    if board[a][b] != 'B':
+                        cnt1 += 1
+                    else:
+                        cnt2 += 1
+    res.append(min(cnt1, cnt2))
+print(min(res))
