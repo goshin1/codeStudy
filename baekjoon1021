@@ -1,0 +1,47 @@
+n, m = map(int, input().split()) # 총 숫자의 길이 및 빼내야 되는 숫자
+cmd = [*map(int, input().split())] # 빼내야 되는 숫자들
+queue = [i for i in range(1, n + 1)] # 숫자들이 들어있는 배열
+cnt = 0
+while cmd: # 빼낼 숫자가 없을 때 까지
+    chk = cmd[0]
+    idx = queue.index(chk)
+    if len(queue[idx:]) < len(queue[:idx]): # 빼야될 숫자가 맨 앞으로 옮기는게 짧은 경우
+        temp = queue[idx:]
+        cnt += len(temp)
+        queue = temp[1:] + queue[:idx]
+    else: # 빼야될 숫자가 맨 앞 숫자를 뒤로 옮기는게 짧은 경우
+        cnt += len(queue[:idx])
+        queue = queue[idx:] + queue[:idx]
+        queue = queue[1:]
+    cmd = cmd[1:]
+print(cnt)
+# ----- 또 다른 정답 -----
+from collections import deque
+import sys
+
+input = sys.stdin.readline
+n, m = map(int, input().split())
+pops = [*map(int, input().split())]
+queue = deque(range(1, n + 1))
+idx = 0
+for p in pops:
+    if p == queue[0]:
+        queue.popleft()
+    else:
+        if queue.index(p) > len(queue) // 2:
+            while True:
+                if queue[0] == p:
+                    queue.popleft()
+                    break
+                else:
+                    queue.appendleft(queue.pop())
+                idx += 1
+        else:
+            while True:
+                if queue[0] == p:
+                    queue.popleft()
+                    break
+                else:
+                    queue.append(queue.popleft())
+                idx += 1
+print(idx)
