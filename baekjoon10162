@@ -1,0 +1,20 @@
+t = int(input())
+a, b, c = 300, 60, 10
+cnt1, cnt2, cnt3 = 0, 0, 0
+time = 0
+if t % 10 != 0:
+    print(-1)
+else:
+    while time != t:
+        if time + a <= t:
+            time += a
+            cnt1 += 1
+        elif time + b <= t:
+            time += b
+            cnt2 += 1
+        elif time + c <= t:
+            time += c
+            cnt3 += 1
+        if time == t:
+            break
+    print(cnt1, cnt2, cnt3)
