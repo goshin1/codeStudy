@@ -1,0 +1,13 @@
+first = [*map(str, input())]
+second = [*map(str, input())]
+alphabet1 = [0] * 26
+alphabet2 = [0] * 26
+for i in first:
+    alphabet1[ord(i) - 97] += 1
+for i in second:
+    alphabet2[ord(i) - 97] += 1
+res = 0
+for i in range(26):
+    if alphabet1[i] != alphabet2[i]:
+        res += (abs(alphabet1[i] - alphabet2[i]))
+print(res)
