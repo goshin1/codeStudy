@@ -1,0 +1,6 @@
+n, k = map(int, input().split())
+nums = [*map(int, input().split())]
+res = []
+for i in range(n - k + 1):
+    res.append(sum(nums[i:i + k]))
+print(max(res))
