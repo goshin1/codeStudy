@@ -1,0 +1,31 @@
+n = int(input())
+string = input()
+str_list = []
+for i in range(0, n * 6, 6):
+    str_list.append(string[i:i + 6])
+
+alp = [
+    '000000', '001111', '010011', '011100', '100110', '101001', '110101',
+    '111010'
+]
+code = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+cnt = 0
+encnt = 0
+res = ''
+for s in range(n):
+    chk = -1
+    for i in range(8):
+        cnt = 0
+        for j in range(6):
+            if str_list[s][j] != alp[i][j]:
+                cnt += 1
+        if cnt < 2:
+            res = res + code[i]
+            chk = -1
+            break
+        else:
+            chk = s
+    if chk != -1:
+        print(chk + 1)
+        exit(0)
+print(res)
