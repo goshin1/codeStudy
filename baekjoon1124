@@ -1,0 +1,64 @@
+def eratosthenes(n):  # 범위 내의 소수를 구하는 에라토스테네스의 체
+    arr = [True for i in range(n + 1)]
+    arr[0] = False
+    arr[1] = False
+    for i in range(2, int(n**0.5) + 1):
+        if arr[i] == True:
+            for j in range(i + i, n + 1, i):
+                arr[j] = False
+    return [i for i in range(n + 1) if arr[i] is True]
+
+def check_prime(n):  # 소수인지 판단
+    if n == 1:
+        return False
+    for i in range(2, int(n**0.5) + 1):
+        if n % i == 0:
+            return False
+    return True
+
+def is_under_prime(prime_nums, num): # 입력 값 a부터 b 사이의 값 중 소인수의 갯수가 소수인지 알아내기
+    count = 0
+    for prime in prime_nums:
+        if num == 1:
+            break
+        while num % prime == 0:
+            count += 1
+            num //= prime
+    return check_prime(count)
+
+a, b = map(int, input().split())
+prime_nums = eratosthenes(b)
+print(prime_nums)
+answer = 0
+for i in range(a, b + 1):
+    if is_under_prime(prime_nums, i):
+        answer += 1
+print(answer)
+
+"""
+처음 이 문제를 풀 때 a부터 b의 숫자를 하나하나 소인수를 구한 뒤 소인수의 수가 소수인지 알아내는 방식으로 구현했다
+하지만 이렇게 구현하니 15%에서 오답이 나왔다.
+그래서 오타와 반복문의 범위를 수정 했으나 20%정도에서 시간초과가 나와 정답을 알아보게 되었다
+
+풀이에 앞서 해당 문제에 대해 되짚어 보자
+두 정수 a와 b가 주어졌을 때 이 사이 정수 중 언더프라임인 수의 갯수를 구한다
+- 언더프라임은 소인수분해를 하고 난 후 소인수의 수가 소수인 수
+
+이 떄 처음 구현했던 것 처럼 반복문마다 확인하면 시간을 초과한다
+그래서 미리 소수 목록을 구현한다. 소인수분해를 위해 쓰는 것인기 때문에 b를 넘는 경우는 없기 때문이다.
+이때 소수는 "에라토스테네스의 체"를 통해 알아낸다
+- 입력된 수의 제곱근까지 수가 범위
+- 2부터 시작해서 해당 숫자의 배수를 제외시킨다
+- 제외 시킨 후 남은 숫자 중 제일 가까운 숫자를 통해 다시 반복한다
+
+그 후 is_under_prime함수를 실행한다. 해당 함수는 정수가 가지고 있는 소인수의 개수를 구하는 함수이다(ex : 12 => [2, 2, 3])
+함수 내 반복 문을 보면 num == 1이면 멈추는 이유는 1은 소수가 아니기 때문이다. 그리고 밑에 while문이 중요하다
+입력 받은 수가 소수로 안나눠 질 때까지 반복하는데 예를 들자면
+12가 입력값으로 들어왔다 그리고 처음 값은 2이다.(제일작은 소수) 그러면 12 % 2 = 0 이기에 12 / 2 = 6이 된다.
+그리고 6은 다시 2로 나눌 수 있기에 while문은 한번 더 돌아간다. 그 후 2로는 3을 나눌 수 없어 빠져나오게 된다.
+다음 소수인 3을 불러온다 그러면 6은 3이 된다. 다시한번 while문의 조건이 안 맞기에 빠져나온다. 
+num은 3 / 3 = 1으로 1이 되어 for문 또한 빠져나온다. 그러면 return값으로 check_prime(count)이 실행되는데 이 때 인자로 3이 전해진다.
+
+check_prime은 소수인지 판단하는 함수로 소수일 경우 true를 반환한다. 그래서 is_under_prime의 return값으로 결과인 true가 전해지고
+answer의 값이 증가한다.
+"""
